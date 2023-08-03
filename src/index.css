@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+  background: #f6f5f7;
+  margin: 0;
+  padding-top: 75px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.navbar-brand {
+  color: #df3ca6;
+}
+
+.navbar-brand img {
+  width: 150px;
+  margin-right: 10px;
+}
+
+.btn {
+  font-size: 15px;
+}
+
+.btn-primary,
+.bg-primary {
+  background-color: #18416d !important;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #18416d;
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: #7430f9;
+}
+
+.btn-secondary:hover {
+  background-color: #7430f9;
+  opacity: 0.9;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.profile{
+  width: 40px;
+  height: 40px;
+}
+
+.myIcons{
+  height: 80px; 
+  width: 80px
+}
+
+.studentIcon{
+  margin-top: 20px;
+  margin-bottom: 40px;
+  height: 150px; 
+  width: 150px;
+  color: #D3D3D3;
+}
+
+.form{
+  margin: auto;
+}
+
+.btn {
+background-color: #A020F0;
+color: #fff;
+}
+
+.btn:hover{
+  background-color: #b86ee6;
+  color: #fff;
+}
+.myLinks{
+  background:#fff;
+  color: #0066b2;
+}
+
+.a:hover {
+  color: #0066b2;
+  text-decoration: underline;
+}
+
+.createUserForm{
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+}
+
+.form .logo3 
+{
+  width: 100px;
+  height: 100px;
+}
+
+#toCollapse{
+  padding: 10px !important;
+  background: #3eb992;
+  color: #fff !important;
+}
+
+#toCollapse:hover{
+  background: #70e0bd;
+}
+
+#collapsable{
+  margin-bottom: 35px !important;
+}
+
+.btn:focus,.btn:active{
+  outline: none !important;
+  box-shadow: none;
+}
+
+#header{
+  background: #5e0451;
+	background: -webkit-linear-gradient(to right, #ff03d9, #5e0451);
+	background: linear-gradient(to right, #ff03d9, #5e0451);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: #FFFFFF;
+  border: 1px solid linear-gradient(to right, #ff03d9, #5e0451);
+}
+
+.form-control-dark {
+  color: black;
+  background-color: #fff;
+  border-color: #fff;
+}
+.nav-item {
+  margin-right: 10px;
+}
+
+.linegraph {
+  width: 100%;
+  height: 100%;
+}
+
+.tabs{
+  color: #A020F0;
+  background: #fff;
+  border: 1px solid #A020F0; 
+}
+
+.active-tabs {
+  color: #fff;
+  background: #A020F0;
+  border: #0066b2;
+}
+
+.content {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.active-content {
+  display: block;
+}
+
+@media screen and (min-width:768px) and (max-width:991px) {
+  body {
+      margin-top:100px !important;
+  }
+}
+@media screen and (min-width:992px) and (max-width:1199px) {
+  body {
+      margin-top:50px !important;
+  }
+}
