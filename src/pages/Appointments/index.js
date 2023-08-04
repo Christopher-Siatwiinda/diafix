@@ -3,22 +3,23 @@ import TotalAppointments from '../../components/Patients/TotalAppointments';
 import AttendedAppointments from '../../components/Patients/AttendedAppointments';
 import PendingAppointments from '../../components/Patients/PendingAppointments';
 import { CiUser } from 'react-icons/ci';
-import {
-   HiOutlineMail,
-   HiOutlineUser,
-   HiOutlineIdentification,
-   HiOutlinePhone,
-   HiOutlineCalendar } from 'react-icons/hi';
-import { IoMdTime } from 'react-icons/io'
-import { Alert } from '@mui/material';
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
+import AttendedAppList from '../../components/Patients/AttendedAppList';
+import PenddingAppList from '../../components/Patients/PendingAppList';
+import Pagination  from '../../components/Pagination';
+import Pagination2  from '../../components/Pagination2';
 
 export default function Index() {
   const { currentUser } = useAuth();
   const [newAppoint, setNewAppoint] = useState([]);
   const [attendedAppoint, setAttendedAppoint] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [appointmentsPerPage] = useState(1);
+  const [currentPage1, setCurrentPage1] = useState(1);
+  const [appointmentsPerPage1] = useState(1);
 
   useEffect(() =>{
     const allApp = async () => {
@@ -32,7 +33,7 @@ export default function Index() {
           collection(db, `DiaFixDoctor/${currentUser.uid}/Appointments`),
           where('attended', "==", "true")
         );
-  
+        
         const newApp = await getDocs(getApp);
         const attendedApp = await getDocs(getAttended);
   
@@ -43,6 +44,22 @@ export default function Index() {
 
     allApp();
   })
+
+  // pagination getting the current page.
+      // first page
+  const indexOfLastAppoint = currentPage * appointmentsPerPage;
+  const indexOfFirstAppoint = indexOfLastAppoint - appointmentsPerPage;
+     // second page
+  const indexOfLastAppoint1 = currentPage1 * appointmentsPerPage1;
+  const indexOfFirstAppoint1 = indexOfLastAppoint1 - appointmentsPerPage1;
+
+  const currentAttApps = attendedAppoint.slice(indexOfFirstAppoint1, indexOfLastAppoint1);
+  const currentPendingApps = newAppoint.slice(indexOfFirstAppoint, indexOfLastAppoint);
+  
+  // pagination change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const myPaginate = (pageNumber) => setCurrentPage1(pageNumber);
+
   return (
     <div>
         <div className='mb-3 row'>
@@ -71,40 +88,28 @@ export default function Index() {
             
           <div>
             <h6 className='ms-2 mt-4'>New Appointments</h6>
-            {newAppoint.length > 0 ? (<div>{newAppoint.map((app)=>(
-              <div className='p-2 rounded shadow mb-3' style={{background: "#fff"}}>
-              <p className='lh-lg fs-6'><HiOutlineUser/> {app.name} <HiOutlineMail/> {app.email}  
-              <HiOutlineIdentification/> {app.nrc} <HiOutlinePhone/> {app.phone} </p>
-              <p style={{paddingTop: 0}}> <IoMdTime/> {app.time}    <HiOutlineCalendar/> {app.date}</p>
-              <div className='d-flex justify-content-end'><button style={{
-              borderStyle: 'none', 
-              marginTop: 10+"px", 
-              paddingTop: 5+"px",
-              paddingRight: 35+'px',
-              paddingLeft: 35+'px',
-              paddingBottom: 5+'px'
-              }}>attended</button></div>
-            </div>
-            ))} </div>) : (
-              <Alert severity='error' className='p-5 shadow'>
-                Unfortunately, you do not have any new Appointments
-              </Alert>
-            )}  
+            {newAppoint && (
+              <div>
+                <div>
+                  <PenddingAppList newAppoint={currentPendingApps}/>
+                </div>
+                <Pagination 
+                  itemPerPage={appointmentsPerPage} 
+                  totalItems={attendedAppoint.length}
+                  paginate={paginate}/>
+              </div>
+            )}
           </div>
           <div>
             <h6 className='ms-2 mt-4'>Attended Appointments</h6>
-            {attendedAppoint.length > 0 ? (
-              <div>{attendedAppoint.map((att) => (
-                <div className='p-2 rounded shadow mb-3' style={{background: "#fff"}}>
-                  <p className='lh-lg fs-6'><HiOutlineUser/>{att.name} <HiOutlineMail/> {att.email} <br/>
-                  <HiOutlineIdentification/> {att.nrc} <HiOutlinePhone/> {att.phone} <br/><Alert severity='success'>Attended</Alert></p>
-                  <p><IoMdTime/> {att.time}   <HiOutlineCalendar/> {att.date}</p>
-                </div>
-              ))}</div>
-            ):(
-              <Alert severity='error' className='p-5 shadow'>
-                Unfortunately, you do not have any attended Appointments
-              </Alert>
+            {attendedAppoint && (
+              <div>
+                <AttendedAppList attendedAppoint={currentAttApps}/>
+                <Pagination2 
+                  itemPerPage={appointmentsPerPage1} 
+                  totalItems={attendedAppoint.length}
+                  paginate={myPaginate}/>
+              </div>
             )}
           </div>    
     </div>
