@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { auth, db } from '../config/firebase';
+import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth';
-import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -13,7 +11,6 @@ export function useAuth(){
 export function AuthProvider({children}) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
     
     function login(email, password){
         return signInWithEmailAndPassword(auth, email, password);
@@ -24,6 +21,7 @@ export function AuthProvider({children}) {
     }
 
     function logout(){
+        localStorage.removeItem("user")
         return signOut(auth)
     }
 
@@ -36,22 +34,7 @@ export function AuthProvider({children}) {
             async function testLogin(){
                 if(user){
                     const uid = user.uid;
-                    const snapshot = await getDoc(doc(db, "DiaFixDoctor", uid));
-                    if(snapshot.exists()){
-                      navigate('/home')
-                    }else{
-                      const snapshot = await getDoc(doc(db, "DiaFixPatient", uid));
-                      if(snapshot.exists()){
-                       
-                      }else{
-                        const snapshot = await getDoc(doc(db, "DiaFixAdmin", uid));
-                        if(snapshot.exists()){
-                          
-                        }else{
-                          console.log('missing docs')
-                        }
-                      }
-                    }
+                    localStorage.setItem("user" , uid);
                   }else{
                     console.log("User not logged in");
                   }

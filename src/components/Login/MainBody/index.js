@@ -9,23 +9,41 @@ import { useAuth } from "../../../contexts/AuthContext";
 import logo192 from '../../../assets/logo192.png';
 import { Link } from "react-router-dom";
 import Spinner from "../../Spinner";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../config/firebase";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { login, signin, currentUser } = useAuth();
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false)
-   
-
-    console.log(email)
-    console.log(password)    
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, signin, currentUser } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false)
+      
     async function handleLogin(e) {
       e.preventDefault();
       try {
         setError("")
         setLoading(true);
         await login(email, password)
+       
+        const snapshot = await getDoc(doc(db, "DiaFixDoctor", localStorage.getItem("user")));
+        if(snapshot.exists()){
+          navigate('/home')
+        }else{
+          const snapshot = await getDoc(doc(db, "DiaFixPatient", localStorage.getItem("user")));
+          if(snapshot.exists()){
+            navigate('/home')
+          }else{
+            const snapshot = await getDoc(doc(db, "DiaFixAdmin", localStorage.getItem("user")));
+            if(snapshot.exists()){
+              navigate('/home')
+            }else{
+              console.log('missing docs')
+            }
+          }
+        }
       }catch(err){
         setError("Wrong email or password, try again!");
       }

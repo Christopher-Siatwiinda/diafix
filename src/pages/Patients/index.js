@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import Table from '../../components/Patients/Table';
+import React, { useState } from 'react';
 import TotalPatients from '../../components/Patients/TotalPatients';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
@@ -10,13 +9,11 @@ import Line from '../../components/Patients/graphs/Line';
 import BPLine from '../../components/Patients/graphs/BPLine';
 import BMILine from '../../components/Patients/graphs/BMILine';
 import Data from '../../components/Patients/Data';
-import { BiBorderRadius } from 'react-icons/bi';
 import { Alert } from '@mui/material';
 
 export default function Index() {
   const [search, setSearch] = useState("");
   const [pat, setPat] = useState([]);
-  const [myData, setMyData] = useState([]);
   const [toggle, setToggle] = useState(1);
 
     const getPatient = async () => {

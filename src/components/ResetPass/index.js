@@ -32,7 +32,7 @@ export default function Index() {
       <Header/>
       <div className="form container-form">
         <div className="form-container sign-in-container">
-            <form>
+            <form className="form-login">
               <div className='text-center mb-2'>
                   <img src={logo192} alt="logo" className='logo3' />
               </div>

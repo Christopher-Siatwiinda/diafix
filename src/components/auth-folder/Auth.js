@@ -15,10 +15,12 @@ export default function Auth() {
       await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
           // Signed in
-          const user = userCredential.user.uid;
+          if(userCredential){
+            const user = userCredential.user.uid;
+            localStorage.setItem("user" , user)
+          }
           
           //navigate("/home")
-          console.log(user);
           
       })
       .catch((error) => {

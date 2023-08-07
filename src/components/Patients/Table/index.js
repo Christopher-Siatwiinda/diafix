@@ -29,11 +29,11 @@ export default function Index() {
             </thead>
             {patients.map((patient) =>(
               <tbody>
-                <tr>
-                <td>{patient.fullName}</td>
-                <td>{patient.NRC}</td>
-                <td>{patient.Email}</td>
-                <td>{patient.Phone}</td>
+                <tr key={patient.id}>
+                  <td>{patient.fullName}</td>
+                  <td>{patient.NRC}</td>
+                  <td>{patient.Email}</td>
+                  <td>{patient.Phone}</td>
                 </tr>
               </tbody>
             ))

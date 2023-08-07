@@ -8,6 +8,7 @@ import Patients from './pages/Patients';
 import { AuthProvider } from './contexts/AuthContext';
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ResetPass from './components/ResetPass';
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
@@ -16,11 +17,13 @@ function App() {
       <Router>
         <AuthProvider>
             <Routes>
-              <Route exact path='/' element={<DocLayout/>}>
-                <Route path='/home' element={<Home/>}/>
-                <Route path='/patients' element={<Patients/>}/>
-                <Route path='/appointments' element={<Appointments/>}/>
-                <Route path='/profile' element={<Profile/>}/>
+              <Route element={<PrivateRoute/>}>
+                <Route exact path='/' element={<DocLayout/>}>
+                  <Route index path='/home' element={<Home/>}/>
+                  <Route path='/patients' element={<Patients/>}/>
+                  <Route path='/appointments' element={<Appointments/>}/>
+                  <Route path='/profile' element={<Profile/>}/>
+                </Route>
               </Route>
               <Route path='/login' element={<Login/>}/>
               <Route path='/resetpassword' element={<ResetPass/>}/>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getDoc, doc } from 'firebase/firestore';
 
 export default function Index({currentUser}) {
-    const uid = currentUser.uid;
+    const uid = localStorage.getItem("user");
     const [currentDoc, setCurrentDoc] = useState(null)
   
       async function docInfo () {

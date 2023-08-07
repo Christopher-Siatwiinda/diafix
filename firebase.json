@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "mydiafix",
     "public": "build",
     "ignore": [
       "firebase.json",

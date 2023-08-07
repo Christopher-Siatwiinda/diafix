@@ -12,25 +12,25 @@ import Pagination  from '../../components/Pagination';
 import Pagination2  from '../../components/Pagination2';
 
 export default function Index() {
-  const { currentUser } = useAuth();
+  const currentUser = localStorage.getItem("user");
   const [newAppoint, setNewAppoint] = useState([]);
   const [attendedAppoint, setAttendedAppoint] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [appointmentsPerPage] = useState(1);
+  const [appointmentsPerPage] = useState(10);
   const [currentPage1, setCurrentPage1] = useState(1);
-  const [appointmentsPerPage1] = useState(1);
+  const [appointmentsPerPage1] = useState(10);
 
   useEffect(() =>{
     const allApp = async () => {
       if(currentUser){
         const getApp = query(
-          collection(db, `DiaFixDoctor/${currentUser.uid}/Appointments`),
+          collection(db, `DiaFixDoctor/${currentUser}/Appointments`),
           where('attended', "==", "false")
         );
   
         const getAttended = query(
-          collection(db, `DiaFixDoctor/${currentUser.uid}/Appointments`),
+          collection(db, `DiaFixDoctor/${currentUser}/Appointments`),
           where('attended', "==", "true")
         );
         
@@ -65,19 +65,19 @@ export default function Index() {
         <div className='mb-3 row'>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <TotalAppointments currentUser={currentUser.uid}/>
+                    <TotalAppointments currentUser={currentUser}/>
                   )}
                   
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <AttendedAppointments currentUser={currentUser.uid}/>
+                    <AttendedAppointments currentUser={currentUser}/>
                   )}
                   
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <PendingAppointments currentUser={currentUser.uid}/>
+                    <PendingAppointments currentUser={currentUser}/>
                   )}
                 </div>
             </div>

@@ -5,13 +5,12 @@ import TotalPatients from '../../components/Patients/TotalPatients';
 import TotalAppointments from '../../components/Patients/TotalAppointments';
 import PendingAppointments from '../../components/Patients/PendingAppointments';
 import AttendedAppointments from '../../components/Patients/AttendedAppointments';
-import {useAuth} from '../../contexts/AuthContext';
 import { useState } from 'react';
 import Spinner from '../../components/Spinner';
 
 export default function Index() {
-    const {currentUser} = useAuth();
-    const [loading, setLoading] = useState(true);
+    const currentUser = localStorage.getItem("user")
+    const [loading, setLoading] = useState(false);
 
     if(!currentUser){
         setLoading(true);
@@ -26,19 +25,19 @@ export default function Index() {
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <TotalAppointments currentUser={currentUser.uid}/>
+                    <TotalAppointments currentUser={currentUser}/>
                   )}
                   
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <AttendedAppointments currentUser={currentUser.uid}/>
+                    <AttendedAppointments currentUser={currentUser}/>
                   )}
                   
                 </div>
                 <div className='col-lg-3 col-md-4 col-sm-auto'>
                   {currentUser && (
-                    <PendingAppointments currentUser={currentUser.uid}/>
+                    <PendingAppointments currentUser={currentUser}/>
                   )}
                 </div>
             </div>

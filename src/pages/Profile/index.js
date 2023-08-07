@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { FaUserMd } from 'react-icons/fa';
 import { db } from '../../config/firebase';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
-import { useAuth } from '../../contexts/AuthContext';
 import { updatePassword } from 'firebase/auth';
 
 export default function Index() {
-    const {currentUser} = useAuth();
+    const currentUser = localStorage.getItem("user")
     const [loggedUser, setLoggedUser] = useState(null);
     const [docUid, setDocUid] = useState();
     const [email, setEmail] = useState('');
@@ -44,8 +43,8 @@ export default function Index() {
     useEffect(() => {
         const currentDoc = async () => {
             if(currentUser){
-                const uid = currentUser.uid;
-                setDocUid(currentUser.uid);
+                const uid = currentUser;
+                setDocUid(currentUser);
                 const snapshot = await getDoc(doc(db, "DiaFixDoctor", uid));
                 if(snapshot.exists()){
                     setLoggedUser(snapshot.data());
@@ -64,9 +63,9 @@ export default function Index() {
     
   return (
     <div className='row ms-1'>
-        <div style={{background: '#ff03d9', color: '#fff'}} className='shadow rounded col-lg-4 col-md-4 col-sm-auto'>
+        <div style={{background: '#ff03d9', color: '#fff', marginRight: "0px"}} className='shadow rounded col-lg-4 col-md-4 col-sm-auto mb-3'>
             <div className='text-center pt-3 pb-3 shadow rounded-bottom' style={{color: "#fff"}}>
-                <FaUserMd style={{width: 200+'px', height: 200+'px'}}/>
+                <FaUserMd style={{width: 190+'px', height: 190+'px'}}/>
             </div>
             {loggedUser && (
                 <div>

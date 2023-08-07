@@ -160,6 +160,10 @@ color: #fff;
   border: 1px solid #A020F0; 
 }
 
+.tabs:hover{
+  color: #fff;
+}
+
 .active-tabs {
   color: #fff;
   background: #A020F0;
